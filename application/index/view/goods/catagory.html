@@ -1,0 +1,228 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__ROOT__/public/static/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="__ROOT__/public/static/lib/datapond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/lib/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/lib/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/lib/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="__ROOT__/static/lib/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="__ROOT__/static/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <!--[if IE 6]>
+    <script type="text/javascript" src="__ROOT__/public/static/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    </style>
+    <title>分类管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 分类管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+
+<div style="margin-left:200px;">
+    <div class="page-container add">
+        <form action="" method="post" class="form form-horizontal" id="add">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">选择分类等级：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <select name="catagory_parent_id" id="catagory_parent_id" style="font-size: 14px; height: 31px;line-height: 1.42857;padding: 4px;">
+                        <option value="0">一级分类</option>
+                        <option value="1">二级分类</option>
+                        <option value="2">三级分类</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row cl second" style="display: none;">
+                <label class="form-label col-xs-4 col-sm-2">对应的二级分类：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <select name="catagory_cat_id1" id="catagory_cat_id1" style="font-size: 14px; height: 31px;line-height: 1.42857;padding: 4px;">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="row cl third" style="display: none;">
+                <label class="form-label col-xs-4 col-sm-2">对应的三级分类：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <select name="catagory_cat_id2" id="catagory_cat_id2" style="font-size: 14px; height: 31px;line-height: 1.42857;padding: 4px;">
+     
+                    </select>
+                </div>
+            </div>       
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    分类名称：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" placeholder="" id="catagory_name" name="catagory_name">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">分类排序：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" value="" placeholder="0-100" id="catagory_orderby" name="catagory_orderby">
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">是否启用：</label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <select name="catagory_active" id="catagory_active" style="font-size: 14px; height: 31px;line-height: 1.42857;padding: 4px;">
+                        <option value="1">启用</option>
+                        <option value="0">不启用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <a onClick="catagory_save_submit();" class="btn btn-primary radius" href="javascript:;">
+                        <i class="Hui-iconfont">&#xe632;</i> 保存</a>
+                </div>
+            </div>
+        </form>    
+    </div>
+</div>
+<footer class="footer mt-20">
+    <div class="container">
+    <p>Powered By 福建麦口信息科技有限公司</p>
+    </div>
+</footer>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__ROOT__/static/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ROOT__/static/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="__ROOT__/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<!-- <script type="text/javascript" src="__ROOT__/static/js/catagory.js"></script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajax({
+        async:false,
+        cache:false,
+        type: 'POST',
+        data:{},
+        dataType : "json",
+        url: 'catagoryZtree',//请求的action路径
+        success:function(res){ //请求成功后处理函数
+            // console.log(data);
+            if(res.code == 0){
+                treeNodes = res.data; //把后台封装好的简单Json格式赋给treeNodes
+                $.fn.zTree.init($("#treeDemo"), setting, treeNodes);
+                // var zTree = $.fn.zTree.getZTreeObj("tree");                 
+            }
+            if (data.code == 400) {
+                layer.msg(data.msg, { icon: 2, time: 1000 });
+            }
+        },
+        error: function(){
+            layer.msg('错误，请稍后再试！',{icon:2,time:1000});
+        },
+    });    
+})
+// ztree插件
+var setting = {
+    view: {
+        dblClickExpand: true,
+        showLine: false,
+        selectedMulti: false
+    },
+    data: {
+        simpleData: {
+            enable:true,
+            idKey: "id",
+            pIdKey: "pId",
+            rootPId: ""
+        }
+    },
+    callback: {
+        beforeClick: function(treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree");
+            if (treeNode.isParent) { 
+                // console.log(treeNode.id);
+                $("#f_id").text(treeNode.id);
+                $.ajax({
+                    url: 'selectCatagory',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { cat_id: treeNode.id },
+                    success: function(res){
+                        if(res.code=="200"){
+                            $('.add').hide();
+                            $('.cat').hide();
+                            $('.father').show();
+                            $('#catagory_father_name').val(res.data.name);
+                            $('#catagory_father_orderby').val(res.data.orderby);
+                            $('#catagory_father_active').val(res.data.is_active);
+                        }else{
+                            layer.msg(res.msg,{icon:2,time:1000});
+                        }                       
+                    },
+                    error:function(res) {
+                        layer.msg('网络出错！请刷新！',{icon:2,time:1000});
+                    },
+                });                
+            } else {
+                // demoIframe.attr("src",treeNode.file + ".html");
+                // console.log(treeNode.id);
+                $("#c_id").text(treeNode.id);
+                $.ajax({
+                    url: 'selectCatagory',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { cat_id: treeNode.id },
+                    success: function(res){
+                        if(res.code=="200"){
+                            $('.add').hide();
+                            $('.father').hide();
+                            $('.cat').show();
+                            $('#catagory_cat_name').val(res.data.name);
+                            $('#catagory_cat_orderby').val(res.data.orderby);
+                            $('#catagory_cat_active').val(res.data.is_active);
+                            $('#catagory_id').val(res.data.father_id);
+                            $('.pic_src').html('<img src="/public'+res.data.pic+'" alt="图片" style="width:100px;height:100px;">');
+                        }else{
+                            layer.msg(res.msg,{icon:2,time:1000});
+                        }                       
+                    },
+                    error:function(res) {
+                        layer.msg('网络出错！请刷新！',{icon:2,time:1000});
+                    },
+                });
+            }
+        }
+    }
+};
+// 选择框事件
+$("#catagory_parent_id").change(function() {
+    $(".second").hide(); 
+    $(".third").hide();
+    var parent_id = $("#catagory_parent_id").val();
+    if(parent_id == 1){
+        $(".second").show(); 
+    }else if(parent_id ==2){
+        $(".third").show();
+    }
+});
+
+
+
+</script>
+</body>
+</html>
